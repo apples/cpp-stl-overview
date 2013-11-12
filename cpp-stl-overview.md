@@ -1,4 +1,4 @@
-# Program Structure
+# 1 - Program Structure
 
 Most ICPC problems have a similar input and output format.
 
@@ -63,9 +63,9 @@ Why is this eloquent?
 - No time wasted parsing input.
 - Very expressive, no room for doubt (doubt brings errors)
 
-# Efficient Algoithms and Containers
+# 2 - Efficient Algoithms and Containers
 
-## Containers
+## 2.1 - Containers
 
 There are 5 main containers:
 
@@ -137,7 +137,7 @@ So how do you know which container to use?
   - Stable for iterators and references
   - Large objects
 - `deque`
-  - Stabile for references only
+  - Stable for references only
   - Queues and stacks
 - `set`
   - Implicit sorting
@@ -210,7 +210,7 @@ This creates two conceptual categories of containers:
   - Complex insertion and deletion
   - Lack access to front and back
 
-## Container Adaptors
+## 2.2 - Container Adaptors
 
 Container adaptors are wrappers around containers that
 simplify the interface of the underlying container.
@@ -240,21 +240,21 @@ Just a quick syntax overview:
 
 ```C++
 {
-	stack<int, vector<int> > myStack;
-	for (int i=0; i<10; ++i) myStack.push(i);
-	while (!myStack.empty())
-	{
-		cout << myStack.top() << endl;
-		myStack.pop();
-	}
+    stack<int, vector<int> > myStack;
+    for (int i=0; i<10; ++i) myStack.push(i);
+    while (!myStack.empty())
+    {
+        cout << myStack.top() << endl;
+        myStack.pop();
+    }
 }
 ```
 
-## Algorithms
+## 2.3 - Algorithms
 
 Get your wizard hat, it's time for some magic!
 
-Note: C++11 yielded massive improvements to the algorithm library,
+Note: C++11 yielded massive improvements to the algorithm library;
 the new algorithms will *not* be covered in this material.
 
 Most algorithms have a signature similar to: `algo(begin, end, ...)`.
@@ -263,7 +263,7 @@ Several algorithms have suffixes that change their behavior.
 For example, `find` looks for a value, `find_if` applies a predicate,
 and `find_if_not` applies an inverted predicate.
 
-### Non-modifying Sequence Operations (Searching and Counting)
+### 2.3.1 - Non-modifying Sequence Operations (Searching and Counting)
 
 - `for-each`
   - Applies a function to the range
@@ -274,7 +274,7 @@ and `find_if_not` applies an inverted predicate.
 - `search`
   - Similar to `find`, but searches for an entire subrange
 
-### Modifying Sequence Operations (Transforming and Copying)
+### 2.3.2 - Modifying Sequence Operations (Transforming and Copying)
 
 - `copy`
   - Copies a range to another (usually not the best solution)
@@ -293,7 +293,7 @@ and `find_if_not` applies an inverted predicate.
 - `unique`
   - Removes duplicate elements from a range
 
-### Partitioning and Sorting
+### 2.3.3 - Partitioning and Sorting
 
 - `partition`
   - Divides a range into two groups based on a predicate
@@ -302,7 +302,7 @@ and `find_if_not` applies an inverted predicate.
 - `stable_partition` and `stable_sort`
   - Same as the basic versions, but preserves order of equal elements
 
-### Searching and Set Operations
+### 2.3.4 - Searching and Set Operations
 
 Note: These algorithms only work on sorted ranges.
 Also, many containers provide their own versions of these algorithms.
@@ -322,7 +322,7 @@ version.
 - `set_difference`, `set_intersection`, and `set_union`
   - Useful set operations
 
-### Heap Operations
+### 2.3.5 - Heap Operations
 
 These are the algorithms that `priority_queue` uses under the hood.
 These are very tricky to use, and I do not have enough room
@@ -337,7 +337,7 @@ to explain it here.
 - `sort_heap`
   - Un-heapify the range; results in a sorted range
 
-### Lexicographical Operations
+### 2.3.6 - Lexicographical Operations
 
 - `min` and `max`
   - Returns the smallest or largest value of two values or a range
@@ -347,7 +347,7 @@ to explain it here.
   - Transform the range into the next or previous permutation
   - Detects "overflow"
 
-### Numerical Operations
+### 2.3.7 - Numerical Operations
 
 - `accumlate`
   - Summation
@@ -358,9 +358,9 @@ to explain it here.
 - `partial_sum`
   - Integration
 
-# Container/Algorithm Synergy
+# 3 - Container/Algorithm Synergy
 
-## Iterators
+## 3.1 - Iterators
 
 Iterators (aka pointers) are what allow algorithms to operate on
 ranges within containers. Containers and algorithms are completely
@@ -394,14 +394,23 @@ For example, the `sort` algorithm requires `RandomAccessIterator`,
 so it cannot work on `list::iterator`, because `list` does not support
 random access.
 
-## Reverse Iterators
+## 3.2 - Reverse Iterators
 
 Many containers also support an imaginary catergory of iterators.
 
 ```C++
 void print_reverse(vector<int>& int)
+{
+    typedef vector<int>::reverse_iterator RIter;
+    for (RIter i=vec.begin(); i!=vec.end(); ++i)
+    {
+        cout << *i;
+    }
+    cout << endl;
+}
+```
 
-## Using Predicates
+## 3.3 - Using Predicates
 
 Many algorithms and containers accept predicates.
 
