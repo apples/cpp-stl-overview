@@ -293,7 +293,6 @@ and `find_if_not` applies an inverted predicate.
 - `unique`
   - Removes duplicate elements from a range
 
-
 ### Partitioning and Sorting
 
 - `partition`
@@ -311,13 +310,13 @@ For example, it is better to use `set.lower_bound` than the global
 version.
 
 - `lower_bound`
-  - Returns a pointer to the beginning of the subrange
+  - Returns a pointer to the beginning of the subrange of equal elements
 - `upper_bound`
-  - Returns a pointer to the end of the subrange
-- `binary_search`
-  - Determines if the value exists in the range (boolean)
+  - Returns a pointer to the end of the subrange of equal elements
 - `equal_range`
   - Performs `lower_bound` and `upper_bound` simultaneously
+- `binary_search`
+  - Determines if the value exists in the range (boolean)
 - `merge`
   - Merges two sorted ranges into a larger sorted range
 - `set_difference`, `set_intersection`, and `set_union`
@@ -358,4 +357,37 @@ to explain it here.
   - Derivative
 - `partial_sum`
   - Integration
+
+# Container/Algorithm Synergy
+
+## Using Predicates
+
+Many algorithms and containers accept predicates for comparison.
+
+A binary predicate accepts two values, and a unary predicate accepts one.
+Both usually return a `bool`.
+
+```C++
+bool str_size_comp(const string& a, const string& b)
+{
+    return (a.size() < b.size());
+}
+
+void sort_by_size(vector<string>& vec)
+{
+    sort(vec.begin(), vec.end(), str_size_comp);
+}
+```
+
+```C++
+bool is_even(int i)
+{
+    return (i%2 == 0);
+}
+
+void separate_even(vector<int>& vec)
+{
+    partition(vec.begin(), vec.end(), is_even);
+}
+```
 
