@@ -360,12 +360,55 @@ to explain it here.
 
 # Container/Algorithm Synergy
 
+## Iterators
+
+Iterators (aka pointers) are what allow algorithms to operate on
+ranges within containers. Containers and algorithms are completely
+separate otherwise.
+
+Most containers support the common methods `.begin()` and `.end()`,
+which are iterators to the begin and end of the container.
+The end iterator does not point to a valid element of the container.
+
+There are 5 basic categories of iterators:
+
+- `InputIterator`
+  - Supports `++`
+  - Invalidated after incrementing
+  - Read only
+- `ForwardIterator`
+  - Is an `InputIterator`
+  - Not invalidated after incrementing
+- `BidirectionalIterator`
+  - Is a `ForwardIterator`
+  - Also supports `--`
+- `RandomAccessIterator`
+  - Is a `BidirectionalIterator`
+  - Also supports `+N`
+- `OutputIterator`
+  - Supports `++`
+  - Write only
+
+Each algoirthm will require different categories of iterators.
+For example, the `sort` algorithm requires `RandomAccessIterator`,
+so it cannot work on `list::iterator`, because `list` does not support
+random access.
+
+## Reverse Iterators
+
+Many containers also support an imaginary catergory of iterators.
+
+```C++
+void print_reverse(vector<int>& int)
+
 ## Using Predicates
 
-Many algorithms and containers accept predicates for comparison.
+Many algorithms and containers accept predicates.
 
 A binary predicate accepts two values, and a unary predicate accepts one.
 Both usually return a `bool`.
+
+Algorithms that require comparison accept a binary predicate:
 
 ```C++
 bool str_size_comp(const string& a, const string& b)
@@ -379,15 +422,31 @@ void sort_by_size(vector<string>& vec)
 }
 ```
 
+Algorithms that require a condition accept a boolean unary predicate:
+
 ```C++
 bool is_even(int i)
 {
     return (i%2 == 0);
 }
 
-void separate_even(vector<int>& vec)
+vector<int>::iterator separate_even(vector<int>& vec)
 {
-    partition(vec.begin(), vec.end(), is_even);
+    return partition(vec.begin(), vec.end(), is_even);
+}
+```
+
+Transformation algorithms accept a non-boolean unary predicate:
+
+```C++
+int square(int i)
+{
+    return i*i;
+}
+
+void square_vec(vector<int>& vec)
+{
+    transform(vec.begin(), vec.end(), vec.begin(), square);
 }
 ```
 
