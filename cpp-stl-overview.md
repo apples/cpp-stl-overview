@@ -459,3 +459,25 @@ void square_vec(vector<int>& vec)
 }
 ```
 
+## 3.4 - Efficiency
+
+- Don't be afraid of `vector`
+  - Use `.reserve()` if you know the size
+- Avoid `list` for small datatypes
+  - Cannot make use of cache
+- Consider using `vector` with `sort` rather than `set`
+  - `set` is better for guaranteeing unique values
+  - Same advice for `map`
+  - Iterating over `set` and `map` is very expensive
+
+## 3.5 - Strings
+
+The `string` type is a special container that acts mch like a
+`vector<char>`. It has several built-in algorithms that should
+be preferred over the generic algorithms.
+
+# 4 - Final Tips
+
+- Prefer `vector` as a general container.
+- The standard algorithms are *very* efficient.
+- Check the container for member algorithms before using generic.
